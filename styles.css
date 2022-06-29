@@ -1,0 +1,35 @@
+
+.number{
+    width: 80px;
+    height: 80px;
+    border-radius: 10px;
+    font-size: 20px;
+}
+
+.operator{
+    width: 80px;
+    height: 80px;
+    border-radius: 10px;
+    font-size: 20px;
+}
+
+
+#mainBody{
+    background-color: grey;
+    width: 400px;
+    height: 600px;
+    padding: 20px;
+
+}
+
+#screen{
+    background-color: lightgrey;
+    width: 350px;
+    height: 130px;
+    margin: 20px;
+    border: solid;
+    border-width: 1px;
+    text-align: center;
+    
+
+}
