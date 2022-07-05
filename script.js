@@ -1,5 +1,5 @@
 
-///BUTTONS
+///VARIABLES
 let input1='' ; 
 let input2='' ;
 let OPinput=undefined ;
@@ -7,9 +7,9 @@ let lastInput=undefined ;
 let nbInputs= 0 ;
 let result=0; 
 let lastcalc='' ;
+///
 
-
-
+////BUTTONS
     const screen = document.querySelector('.calculation') ;
     const subscreen = document.querySelector('.subCalc') ;
 
@@ -34,52 +34,62 @@ let lastcalc='' ;
 
     
     const operators = [plus,minus,times,division]; 
+///
 
+
+///CLEAR
     function clearAll()
     {
-        let input1='' ; 
-        let input2='0' ;
-        let OPinput=undefined ;
-        let lastOPinput=undefined; 
-        let lastInput=undefined ;
-        let nbInputs= 0 ;
-        let result=0; 
-        let lastcalc='' ;
+         input1='' ; 
+         input2='' ;
+         OPinput=undefined ;
+         lastOPinput=undefined; 
+         lastInput=undefined ;
+         nbInputs= 0 ;
+         result=0; 
+         lastcalc='' ;
         screen.textContent='' ;
         subscreen.textContent='' ;
         
-        
+         cleared= 1 ;
 
     }
 
 
     clear.addEventListener('click' ,()=>{
-        let input1='' ; 
-        let input2='' ;
-        let OPinput=undefined ;
-        let lastOPinput=undefined; 
-        let lastInput=undefined ;
-        let nbInputs= 0 ;
-        let result=0; 
-        let lastcalc='' ;
+         input1='' ; 
+         input2='' ;
+         OPinput=undefined ;
+         lastOPinput=undefined; 
+         lastInput=undefined ;
+         nbInputs= 0 ;
+         result=0; 
+         lastcalc='' ;
         screen.textContent='' ;
         subscreen.textContent='' ;
         
         
     }) ;
 
+
+///
+
     const numbers=[one,two,three,four,five,six,seven,eight,nine,zero] ; 
 
     numbers.forEach((number)=>{ 
         number.addEventListener('click',()=> {
             if (result==1)
-                clearAll(); 
+                {clearAll(); 
+
+                }
+            
+                
             lastInput = 1 ;
    
 
             if (nbInputs == 0)
             {
-                if (lastcalc==0)
+                if ((lastcalc==0))
                 {input1 += number.textContent ;
             screen.textContent = input1 ;
                 }
@@ -93,21 +103,18 @@ let lastcalc='' ;
         
             }
 
-
-
-          //  console.log(input2) ;
-
         })
     })
 
 
     operators.forEach((operator)=>{ 
         operator.addEventListener('click',()=> {
+            result = 0 ;
             console.log(`input1 : ${input1}`)
             console.log(`input2 : ${input2}`)
-
+            console.log(`RESULT : ${(result)}`)
             console.log(`type of last input : ${typeof(lastInput)}`)
-            if (typeof(lastInput)=='number')
+            if ((typeof(lastInput)=='number')&&(result==0))
             {
                 if (nbInputs==0)
                     nbInputs=1 ;
@@ -121,9 +128,6 @@ let lastcalc='' ;
             subscreen.textContent += OPinput ;
 
             lastInput='op' ;
-
-            
-
 
             if (input2!='')
             {
@@ -139,7 +143,6 @@ let lastcalc='' ;
                     input2 ='';
                     input1 = `${lastcalc}` ;
                     console.log(`input 1 after calc : ${input1}`) ;
-
 
                 }
                 break ;
@@ -199,7 +202,7 @@ let lastcalc='' ;
  
 
         
-        }
+            }
 
     }
 
@@ -237,6 +240,8 @@ let lastcalc='' ;
             result =1 ;
             break ;
         }
+  
+     
     })
 
 
@@ -269,8 +274,10 @@ function divide(a,b)
     }
 }
 
+/*
 function operate(operator,a,b)
 {
     console.log("OPERATING") ;
 
 }
+*/
