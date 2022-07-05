@@ -1,13 +1,18 @@
 
 ///BUTTONS
-let input1=undefined ; 
-let input2=undefined ;
+let input1='' ; 
+let input2='' ;
 let OPinput=undefined ;
 let lastInput=undefined ;
 let nbInputs= 0 ;
 let result=0; 
+let lastcalc='' ;
+
+
 
     const screen = document.querySelector('.calculation') ;
+    const subscreen = document.querySelector('.subCalc') ;
+
     const one = document.getElementById('1') ;
     const two = document.getElementById('2') ;
     const three = document.getElementById('3') ;
@@ -32,24 +37,35 @@ let result=0;
 
     function clearAll()
     {
-        screen.textContent ='' ;
-        let input2=undefined ;
-let OPinput=undefined ;
-let lastInput=undefined ;
-let nbInputs= 0 ;
-let result=0; 
+        let input1='' ; 
+        let input2='0' ;
+        let OPinput=undefined ;
+        let lastOPinput=undefined; 
+        let lastInput=undefined ;
+        let nbInputs= 0 ;
+        let result=0; 
+        let lastcalc='' ;
+        screen.textContent='' ;
+        subscreen.textContent='' ;
+        
+        
 
     }
 
 
     clear.addEventListener('click' ,()=>{
-        screen.textContent = '' ;
-        let input1=undefined ; 
-let input2=undefined ;
-let OPinput=undefined ;
-let lastInput=undefined ;
-let nbInputs= 0 ;
-let result=0; 
+        let input1='' ; 
+        let input2='' ;
+        let OPinput=undefined ;
+        let lastOPinput=undefined; 
+        let lastInput=undefined ;
+        let nbInputs= 0 ;
+        let result=0; 
+        let lastcalc='' ;
+        screen.textContent='' ;
+        subscreen.textContent='' ;
+        
+        
     }) ;
 
     const numbers=[one,two,three,four,five,six,seven,eight,nine,zero] ; 
@@ -59,19 +75,27 @@ let result=0;
             if (result==1)
                 clearAll(); 
             lastInput = 1 ;
-            nbInputs ++ ; 
-        
-            if (nbInputs % 2 !=0)
-            {input1 = number.textContent ;
-            screen.textContent += input1 ;}
+   
+
+            if (nbInputs == 0)
+            {
+                if (lastcalc==0)
+                {input1 += number.textContent ;
+            screen.textContent = input1 ;
+                }
+
+          }
 
             else 
-            {input2 = number.textContent ;
-            screen.textContent += input2 ;}
+            {
+                input2 += number.textContent ;
+            screen.textContent = input2 ;
+        
+            }
 
 
-            console.log(input1) ;
-            console.log(input2) ;
+
+          //  console.log(input2) ;
 
         })
     })
@@ -79,11 +103,105 @@ let result=0;
 
     operators.forEach((operator)=>{ 
         operator.addEventListener('click',()=> {
-            console.log(typeof(lastInput)) ;
+            console.log(`input1 : ${input1}`)
+            console.log(`input2 : ${input2}`)
+
+            console.log(`type of last input : ${typeof(lastInput)}`)
             if (typeof(lastInput)=='number')
-            {OPinput = operator.textContent ;
-            screen.textContent += OPinput ;
-            lastInput='op' ;}
+            {
+                if (nbInputs==0)
+                    nbInputs=1 ;
+                    else 
+                    nbInputs=0 ;
+
+                lastOPinput = OPinput ;
+                OPinput = operator.textContent ;
+                subscreen.textContent += screen.textContent ;
+
+            subscreen.textContent += OPinput ;
+
+            lastInput='op' ;
+
+            
+
+
+            if (input2!='')
+            {
+            switch (lastOPinput)
+            {
+                case '+' : 
+                console.log('case +')
+                lastcalc = sum(input1,input2) ;
+                if (!Number.isNaN(lastcalc))
+                {console.log(`last calc ${lastcalc}`); 
+                    screen.textContent = lastcalc ;
+                    nbInputs=1 ;
+                    input2 ='';
+                    input1 = `${lastcalc}` ;
+                    console.log(`input 1 after calc : ${input1}`) ;
+
+
+                }
+                break ;
+                
+                case '-' :  
+                console.log('case -')
+
+                lastcalc =  substract(input1,input2) ; 
+                if (!Number.isNaN(lastcalc))
+                {console.log(`last calc ${lastcalc}`); 
+                screen.textContent = lastcalc ;
+                nbInputs=1 ;
+                input2 ='';
+                input1 = `${lastcalc}` ;
+                    console.log(`input 1 after calc : ${input1}`) ;
+
+
+                }
+                break ;
+                
+                case '*' :  
+                console.log('case *')
+
+                lastcalc =  multiply(input1,input2) ;
+                if (!Number.isNaN(lastcalc))
+                {console.log(`last calc ${lastcalc}`); 
+                    screen.textContent = lastcalc ;
+                    nbInputs=1 ;
+                    input2 ='';
+                    input1 = `${lastcalc}` ;
+                    console.log(`input 1 after calc : ${input1}`) ;
+                }
+
+                break ;
+                
+                case '/' :  
+                console.log('case /')
+
+                     lastcalc =  divide(input1,input2) ; 
+                     if (!Number.isNaN(lastcalc))
+                     {  console.log(`last calc ${lastcalc}`); 
+                        screen.textContent = lastcalc ;
+                        nbInputs=1 ;
+                        input2 ='';
+                        input1 = `${lastcalc}` ;
+                    console.log(`input 1 after calc : ${input1}`) ;
+
+                    }
+                     break ; 
+        
+                default :  
+                lastcalc =   0 ;
+                break ;
+        
+            }
+
+ 
+
+        
+        }
+
+    }
 
         })
     })
@@ -92,26 +210,30 @@ let result=0;
     equal.addEventListener('click',()=> {
         switch (OPinput)
         {
-            case '+' : screen.textContent = sum(input1,input2) ;
+            case '+' : subscreen.textContent += `${input2} =`
+            screen.textContent = sum(input1,input2) ;
                     result =1 ;
             break ;
             
-            case '-' : screen.textContent =  substract(input1,input2) ;  
+            case '-' :  subscreen.textContent += `${input2} =`
+            screen.textContent =  substract(input1,input2) ;  
             result =1 ;
 
             break ;
             
-            case '*' : screen.textContent =  multiply(input1,input2) ;
+            case '*' :  subscreen.textContent += `${input2} =`
+            screen.textContent =  multiply(input1,input2) ;
                
             result =1 ;
             break ;
             
-            case '/' : console.log(OPinput) ;
+            case '/' :  subscreen.textContent += `${input2} =`
                  screen.textContent =  divide(input1,input2) ; 
                  result =1 ;
                  break ; 
     
-            default : screen.textContent =  "OOPS";
+            default :  subscreen.textContent += `${input2} =`
+            screen.textContent =  "OOPS";
             result =1 ;
             break ;
         }
@@ -127,12 +249,12 @@ function sum(a,b)
 
 function multiply(a,b)
 {
-    return a*b ; 
+    return parseInt(a)*parseInt(b) ; 
 }
 
 function substract(a,b)
 {
-    return a-b ;
+    return parseInt(a)-parseInt(b) ;
 }
 
 function divide(a,b)
